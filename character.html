@@ -1,0 +1,134 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Character Profile | The Cantina Club</title>
+
+  <style>
+    body {
+      margin: 0;
+      background: #101010;
+      color: #f2eee6;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    header {
+      padding: 30px 20px;
+      text-align: center;
+      background: #15120e;
+      border-bottom: 1px solid #383027;
+    }
+
+    header h1 {
+      margin: 0;
+      color: #d6ad60;
+      font-family: Georgia, serif;
+      letter-spacing: 3px;
+    }
+
+    header p {
+      color: #aaa49a;
+      letter-spacing: 3px;
+      font-size: 0.8rem;
+    }
+
+    main {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 30px 20px 50px;
+    }
+
+    a {
+      color: #d6ad60;
+    }
+
+    .profile {
+      margin-top: 25px;
+      padding: 28px;
+      background: #1b1b1b;
+      border: 1px solid #39332a;
+      border-radius: 7px;
+    }
+
+    h2 {
+      margin-top: 0;
+      color: #d6ad60;
+      font-family: Georgia, serif;
+      font-size: 2rem;
+    }
+
+    .label {
+      color: #aaa49a;
+    }
+
+    .notice {
+      margin-top: 28px;
+      padding: 18px;
+      border-left: 3px solid #d6ad60;
+      background: #1b1b1b;
+      color: #c6c0b6;
+      line-height: 1.6;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>THE CANTINA CLUB</h1>
+    <p>SCI-FI'S NAUGHTY SIDE</p>
+  </header>
+
+  <main>
+    <a href="star-wars.html">← Back to Star Wars characters</a>
+
+    <section class="profile">
+      <h2 id="character-name">Character</h2>
+
+      <p>
+        <span class="label">Portrayed by:</span>
+        <strong id="performer">Information coming soon</strong>
+      </p>
+
+      <p>
+        <span class="label">Franchise:</span>
+        Star Wars
+      </p>
+
+      <h3>Documented appearances</h3>
+      <p id="appearances">
+        Appearance records and source links will be added as the archive develops.
+      </p>
+    </section>
+
+    <div class="notice">
+      The Cantina Club aims to document publicly available information
+      using reliable sources. Records will be expanded and verified over time.
+    </div>
+  </main>
+
+  <script>
+    const characterData = {
+      "Leia Organa": "Carrie Fisher",
+      "Queen Amidala": "Natalie Portman",
+      "Shmi Skywalker": "Pernilla August"
+    };
+
+    const params = new URLSearchParams(window.location.search);
+    const characterName = params.get("name");
+    const performer = characterData[characterName];
+
+    if (characterName && performer) {
+      document.getElementById("character-name").textContent = characterName;
+      document.getElementById("performer").textContent = performer;
+      document.title = characterName + " | The Cantina Club";
+    } else {
+      document.getElementById("character-name").textContent =
+        "Character not found";
+      document.getElementById("performer").textContent =
+        "No profile is available for this character yet.";
+    }
+  </script>
+</body>
+</html>
