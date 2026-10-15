@@ -179,20 +179,27 @@
         return;
       }
 
-      matches.forEach(character => {
-        const card = document.createElement("article");
-        card.className = "character";
+     
+matches.forEach(character => {
+  const card = document.createElement("article");
+  card.className = "character";
 
-        const name = document.createElement("h3");
-        name.textContent = character.name;
+  const name = document.createElement("h3");
+  const link = document.createElement("a");
 
-        const performer = document.createElement("p");
-        performer.textContent = "Portrayed by " + character.performer;
+  link.href = "character.html?name=" +
+    encodeURIComponent(character.name);
 
-        card.append(name, performer);
-        list.appendChild(card);
-      });
-    }
+  link.textContent = character.name;
+  name.appendChild(link);
+
+  const performer = document.createElement("p");
+  performer.textContent = "Portrayed by " + character.performer;
+
+  card.append(name, performer);
+  list.appendChild(card);
+});
+
 
     search.addEventListener("input", () => {
       displayCharacters(search.value);
