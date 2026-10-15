@@ -1,0 +1,361 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="The Cantina Club — exploring the characters, performers, and surprising screen appearances behind science fiction.">
+  <title>The Cantina Club | Sci-Fi's Naughty Side</title>
+
+  <style>
+    :root {
+      --background: #101010;
+      --panel: #1b1b1b;
+      --gold: #d6ad60;
+      --text: #f2eee6;
+      --muted: #aaa49a;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--background);
+      color: var(--text);
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    header {
+      text-align: center;
+      padding: 38px 20px 28px;
+      border-bottom: 1px solid #383027;
+      background: #15120e;
+    }
+
+    .logo {
+      margin: 0;
+      color: var(--gold);
+      font-family: Georgia, serif;
+      font-size: clamp(2.2rem, 7vw, 4rem);
+      letter-spacing: 3px;
+    }
+
+    .tagline {
+      margin: 12px 0 0;
+      color: var(--muted);
+      letter-spacing: 3px;
+      font-size: 0.85rem;
+    }
+
+    .intro {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 36px 20px 24px;
+      text-align: center;
+    }
+
+    .intro h2 {
+      color: var(--gold);
+      font-family: Georgia, serif;
+      font-size: 1.8rem;
+    }
+
+    .intro p {
+      color: #c6c0b6;
+      line-height: 1.7;
+    }
+
+    .search-area {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 0 20px 32px;
+    }
+
+    #search {
+      width: 100%;
+      padding: 14px 16px;
+      border: 1px solid #51442f;
+      border-radius: 5px;
+      background: #202020;
+      color: white;
+      font-size: 1rem;
+    }
+
+    #search:focus {
+      outline: 2px solid var(--gold);
+    }
+
+    main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 20px 50px;
+    }
+
+    .section-title {
+      color: var(--gold);
+      font-family: Georgia, serif;
+      border-bottom: 1px solid #383027;
+      padding-bottom: 12px;
+    }
+
+    .franchises {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 18px;
+      margin-top: 24px;
+    }
+
+    .franchise {
+      min-height: 150px;
+      padding: 24px;
+      border: 1px solid #39332a;
+      border-radius: 7px;
+      background: var(--panel);
+      text-align: left;
+      color: var(--text);
+      cursor: pointer;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+
+    .franchise:hover {
+      border-color: var(--gold);
+      transform: translateY(-3px);
+    }
+
+    .franchise h3 {
+      margin: 0 0 10px;
+      color: var(--gold);
+      font-family: Georgia, serif;
+      font-size: 1.35rem;
+    }
+
+    .franchise p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    #results {
+      margin-top: 35px;
+    }
+
+    .character-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px;
+    }
+
+    .character {
+      padding: 16px;
+      border: 1px solid #39332a;
+      border-radius: 5px;
+      background: var(--panel);
+    }
+
+    .character strong {
+      display: block;
+      margin-bottom: 6px;
+      color: var(--gold);
+    }
+
+    .character span {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .back-button {
+      margin: 0 0 18px;
+      padding: 9px 14px;
+      border: 1px solid var(--gold);
+      border-radius: 4px;
+      background: transparent;
+      color: var(--gold);
+      cursor: pointer;
+    }
+
+    .empty-message {
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    footer {
+      padding: 24px 20px;
+      border-top: 1px solid #383027;
+      color: var(--muted);
+      text-align: center;
+      font-size: 0.85rem;
+      line-height: 1.6;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1 class="logo">THE CANTINA CLUB</h1>
+    <p class="tagline">SCI-FI'S NAUGHTY SIDE</p>
+  </header>
+
+  <section class="intro">
+    <h2>The characters you know. The stories you don't.</h2>
+    <p>
+      Explore science-fiction characters, the performers who brought them
+      to life, and documented appearances from across their careers.
+      Discover the connections, explore the sources, and help build the archive.
+    </p>
+  </section>
+
+  <div class="search-area">
+    <input
+      id="search"
+      type="search"
+      placeholder="Search franchises, characters or performers..."
+      aria-label="Search franchises, characters or performers"
+    >
+  </div>
+
+  <main>
+    <h2 class="section-title">Explore the universes</h2>
+
+    <div class="franchises" id="franchises">
+      <button class="franchise" data-franchise="Star Wars">
+        <h3>Star Wars</h3>
+        <p>A galaxy of heroes, villains and unforgettable characters.</p>
+      </button>
+
+      <button class="franchise" data-franchise="Star Trek">
+        <h3>Star Trek</h3>
+        <p>Boldly exploring the people behind the final frontier.</p>
+      </button>
+
+      <button class="franchise" data-franchise="Babylon 5">
+        <h3>Babylon 5</h3>
+        <p>Political intrigue, alien worlds and complex characters.</p>
+      </button>
+
+      <button class="franchise" data-franchise="Battlestar Galactica">
+        <h3>Battlestar Galactica</h3>
+        <p>Humanity, survival and the faces of a desperate journey.</p>
+      </button>
+
+      <button class="franchise" data-franchise="Other Universes">
+        <h3>Other Universes</h3>
+        <p>More science-fiction worlds to discover and contribute to.</p>
+      </button>
+    </div>
+
+    <section id="results" hidden>
+      <button class="back-button" id="back-button">← All universes</button>
+      <h2 class="section-title" id="results-title"></h2>
+      <div id="character-list" class="character-list"></div>
+    </section>
+  </main>
+
+  <footer>
+    <p>The Cantina Club — an independent, community-built archive.</p>
+    <p>
+      Character and performer information should be supported by reliable sources.
+      This project is not affiliated with any film or television franchise.
+    </p>
+  </footer>
+
+  <script>
+    // Sample entries to demonstrate how the character directory will work.
+    // These are placeholders for the database we will build next.
+    const characters = [
+      { franchise: "Star Wars", name: "Queen Amidala", performer: "Natalie Portman" },
+      { franchise: "Star Wars", name: "Leia Organa", performer: "Carrie Fisher" },
+      { franchise: "Star Wars", name: "Shmi Skywalker", performer: "Pernilla August" },
+      { franchise: "Star Trek", name: "Seven of Nine", performer: "Jeri Ryan" },
+      { franchise: "Star Trek", name: "T'Pol", performer: "Jolene Blalock" },
+      { franchise: "Babylon 5", name: "Delenn", performer: "Mira Furlan" },
+      { franchise: "Babylon 5", name: "Susan Ivanova", performer: "Claudia Christian" },
+      { franchise: "Battlestar Galactica", name: "Number Six", performer: "Tricia Helfer" }
+    ];
+
+    const search = document.getElementById("search");
+    const franchises = document.getElementById("franchises");
+    const results = document.getElementById("results");
+    const resultsTitle = document.getElementById("results-title");
+    const characterList = document.getElementById("character-list");
+    const backButton = document.getElementById("back-button");
+
+    let selectedFranchise = null;
+
+    function showCharacters(franchise, query = "") {
+      selectedFranchise = franchise;
+      franchises.hidden = true;
+      results.hidden = false;
+      resultsTitle.textContent = franchise
+        ? franchise + " Characters"
+        : "Search Results";
+
+      const normalizedQuery = query.trim().toLowerCase();
+
+      const matches = characters.filter(character => {
+        const inFranchise = !franchise || character.franchise === franchise;
+        const matchesQuery = !normalizedQuery ||
+          character.name.toLowerCase().includes(normalizedQuery) ||
+          character.performer.toLowerCase().includes(normalizedQuery) ||
+          character.franchise.toLowerCase().includes(normalizedQuery);
+
+        return inFranchise && matchesQuery;
+      });
+
+      characterList.replaceChildren();
+
+      if (matches.length === 0) {
+        const message = document.createElement("p");
+        message.className = "empty-message";
+        message.textContent =
+          "No sample entries found. The full character database will be added in a later step.";
+        characterList.appendChild(message);
+        return;
+      }
+
+      matches.sort((a, b) => a.name.localeCompare(b.name));
+
+      matches.forEach(character => {
+        const card = document.createElement("div");
+        card.className = "character";
+
+        const name = document.createElement("strong");
+        name.textContent = character.name;
+
+        const performer = document.createElement("span");
+        performer.textContent = "Portrayed by " + character.performer;
+
+        card.append(name, performer);
+        characterList.appendChild(card);
+      });
+    }
+
+    document.querySelectorAll(".franchise").forEach(button => {
+      button.addEventListener("click", () => {
+        showCharacters(button.dataset.franchise);
+      });
+    });
+
+    search.addEventListener("input", () => {
+      const query = search.value;
+
+      if (!query.trim()) {
+        results.hidden = true;
+        franchises.hidden = false;
+        selectedFranchise = null;
+        return;
+      }
+
+      showCharacters(null, query);
+    });
+
+    backButton.addEventListener("click", () => {
+      results.hidden = true;
+      franchises.hidden = false;
+      selectedFranchise = null;
+      search.value = "";
+    });
+  </script>
+</body>
+</html>
