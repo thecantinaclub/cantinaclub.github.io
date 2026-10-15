@@ -1,0 +1,204 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Browse Star Wars characters and their performers at The Cantina Club.">
+  <title>Star Wars Characters | The Cantina Club</title>
+
+  <style>
+    :root {
+      --background: #101010;
+      --panel: #1b1b1b;
+      --gold: #d6ad60;
+      --text: #f2eee6;
+      --muted: #aaa49a;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--background);
+      color: var(--text);
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    header {
+      padding: 30px 20px;
+      text-align: center;
+      background: #15120e;
+      border-bottom: 1px solid #383027;
+    }
+
+    .logo {
+      margin: 0;
+      color: var(--gold);
+      font-family: Georgia, serif;
+      font-size: clamp(2rem, 6vw, 3.4rem);
+      letter-spacing: 3px;
+    }
+
+    .tagline {
+      color: var(--muted);
+      letter-spacing: 3px;
+      font-size: 0.8rem;
+    }
+
+    a { color: var(--gold); }
+
+    main {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 30px 20px 50px;
+    }
+
+    .back-link {
+      display: inline-block;
+      margin-bottom: 20px;
+      text-decoration: none;
+    }
+
+    h2 {
+      color: var(--gold);
+      font-family: Georgia, serif;
+    }
+
+    .intro {
+      color: #c6c0b6;
+      line-height: 1.7;
+    }
+
+    #search {
+      width: 100%;
+      margin: 20px 0 25px;
+      padding: 14px;
+      border: 1px solid #51442f;
+      border-radius: 5px;
+      background: #202020;
+      color: white;
+      font-size: 1rem;
+    }
+
+    #search:focus {
+      outline: 2px solid var(--gold);
+    }
+
+    .character-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+    }
+
+    .character {
+      padding: 20px;
+      border: 1px solid #39332a;
+      border-radius: 6px;
+      background: var(--panel);
+    }
+
+    .character h3 {
+      margin: 0 0 8px;
+      color: var(--gold);
+    }
+
+    .character p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    footer {
+      padding: 24px 20px;
+      border-top: 1px solid #383027;
+      color: var(--muted);
+      text-align: center;
+      font-size: 0.85rem;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1 class="logo">THE CANTINA CLUB</h1>
+    <p class="tagline">SCI-FI'S NAUGHTY SIDE</p>
+  </header>
+
+  <main>
+    <a class="back-link" href="index.html">← Back to all universes</a>
+
+    <h2>Star Wars Characters</h2>
+
+    <p class="intro">
+      Browse characters alphabetically or search by character name or performer.
+      Select a character profile as the archive grows.
+    </p>
+
+    <input
+      id="search"
+      type="search"
+      placeholder="Search characters or performers..."
+      aria-label="Search Star Wars characters"
+    >
+
+    <div id="character-list" class="character-list"></div>
+  </main>
+
+  <footer>
+    The Cantina Club — an independent, community-built archive.
+    Not affiliated with Lucasfilm or Disney.
+  </footer>
+
+  <script>
+    const characters = [
+      { name: "Leia Organa", performer: "Carrie Fisher" },
+      { name: "Queen Amidala", performer: "Natalie Portman" },
+      { name: "Shmi Skywalker", performer: "Pernilla August" }
+    ];
+
+    const search = document.getElementById("search");
+    const list = document.getElementById("character-list");
+
+    function displayCharacters(query = "") {
+      list.replaceChildren();
+
+      const term = query.trim().toLowerCase();
+
+      const matches = characters
+        .filter(character =>
+          character.name.toLowerCase().includes(term) ||
+          character.performer.toLowerCase().includes(term)
+        )
+        .sort((a, b) => a.name.localeCompare(b.name));
+
+      if (matches.length === 0) {
+        const message = document.createElement("p");
+        message.textContent = "No matching characters found.";
+        list.appendChild(message);
+        return;
+      }
+
+      matches.forEach(character => {
+        const card = document.createElement("article");
+        card.className = "character";
+
+        const name = document.createElement("h3");
+        name.textContent = character.name;
+
+        const performer = document.createElement("p");
+        performer.textContent = "Portrayed by " + character.performer;
+
+        card.append(name, performer);
+        list.appendChild(card);
+      });
+    }
+
+    search.addEventListener("input", () => {
+      displayCharacters(search.value);
+    });
+
+    displayCharacters();
+  </script>
+</body>
+</html>
