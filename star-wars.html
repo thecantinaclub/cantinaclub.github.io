@@ -100,7 +100,6 @@
 
     .character h3 {
       margin: 0 0 8px;
-      color: var(--gold);
     }
 
     .character p {
@@ -132,7 +131,7 @@
 
     <p class="intro">
       Browse characters alphabetically or search by character name or performer.
-      Select a character profile as the archive grows.
+      Select a character to open their profile.
     </p>
 
     <input
@@ -179,27 +178,26 @@
         return;
       }
 
-     
-matches.forEach(character => {
-  const card = document.createElement("article");
-  card.className = "character";
+      matches.forEach(character => {
+        const card = document.createElement("article");
+        card.className = "character";
 
-  const name = document.createElement("h3");
-  const link = document.createElement("a");
+        const heading = document.createElement("h3");
+        const link = document.createElement("a");
 
-  link.href = "character.html?name=" +
-    encodeURIComponent(character.name);
+        link.href = "character.html?name=" +
+          encodeURIComponent(character.name);
+        link.textContent = character.name;
 
-  link.textContent = character.name;
-  name.appendChild(link);
+        heading.appendChild(link);
 
-  const performer = document.createElement("p");
-  performer.textContent = "Portrayed by " + character.performer;
+        const performer = document.createElement("p");
+        performer.textContent = "Portrayed by " + character.performer;
 
-  card.append(name, performer);
-  list.appendChild(card);
-});
-
+        card.append(heading, performer);
+        list.appendChild(card);
+      });
+    }
 
     search.addEventListener("input", () => {
       displayCharacters(search.value);
