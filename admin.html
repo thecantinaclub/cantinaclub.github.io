@@ -3,517 +3,387 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin | The Cantina Club</title>
-
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The Cantina Club - Admin</title>
   <style>
-    :root {
-      --background: #101010;
-      --panel: #1b1b1b;
-      --gold: #d5ad55;
-      --text: #eeeeee;
-      --muted: #aaaaaa;
-      --border: #383838;
-      --danger: #c65b5b;
-    }
-
-    * { box-sizing: border-box; }
-
     body {
       margin: 0;
-      background: var(--background);
-      color: var(--text);
-      font-family: Arial, Helvetica, sans-serif;
-      line-height: 1.6;
-    }
-
-    header {
-      padding: 25px 15px;
-      text-align: center;
-      border-bottom: 1px solid var(--border);
-    }
-
-    header a {
-      color: var(--gold);
-      text-decoration: none;
-    }
-
-    .brand {
-      margin: 0;
-      font-size: clamp(26px, 5vw, 38px);
-      letter-spacing: 2px;
-    }
-
-    .tagline {
-      margin: 5px 0 0;
-      color: var(--muted);
-      font-size: 12px;
-      letter-spacing: 3px;
+      padding: 24px;
+      background: #111;
+      color: #eee;
+      font-family: Arial, sans-serif;
     }
 
     main {
-      width: min(1100px, 94%);
-      margin: 30px auto 60px;
+      max-width: 900px;
+      margin: 0 auto;
     }
 
-    h1, h2, h3 { color: var(--gold); }
-
-    .panel, .submission {
-      padding: 22px;
-      margin-bottom: 22px;
-      background: var(--panel);
-      border: 1px solid var(--border);
-      border-radius: 8px;
+    h1, h2 {
+      color: #d5b46a;
     }
 
-    label {
-      display: block;
-      margin: 14px 0 5px;
+    input, button {
+      box-sizing: border-box;
+      padding: 11px;
+      margin: 5px 0;
+      border-radius: 5px;
+      font-size: 15px;
     }
 
     input {
       display: block;
       width: 100%;
-      padding: 12px;
-      background: #111;
-      color: var(--text);
+      max-width: 400px;
+      background: #222;
+      color: white;
       border: 1px solid #555;
-      border-radius: 4px;
-      font: inherit;
     }
 
     button {
-      padding: 11px 17px;
-      margin: 8px 8px 0 0;
-      background: var(--gold);
-      color: #111;
-      border: 0;
-      border-radius: 4px;
-      font-weight: bold;
       cursor: pointer;
+      border: 0;
+      margin-right: 8px;
     }
 
-    button:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
+    .gold {
+      background: #d5b46a;
+      color: #111;
     }
 
-    button.reject {
-      background: var(--danger);
+    .reject {
+      background: #8e3030;
       color: white;
     }
 
-    .topbar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      flex-wrap: wrap;
+    .card {
+      border: 1px solid #444;
+      border-radius: 8px;
+      padding: 16px;
+      margin: 20px 0;
+      overflow-wrap: anywhere;
     }
 
-    .submissions {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
-      gap: 20px;
-    }
-
-    .submission {
-      margin: 0;
-      padding: 0;
-      overflow: hidden;
-    }
-
-    .submission img {
+    .preview {
       display: block;
-      width: 100%;
-      max-height: 420px;
-      object-fit: contain;
-      background: #080808;
+      max-width: 100%;
+      max-height: 400px;
+      margin: 12px 0;
+      border-radius: 5px;
     }
 
-    .details { padding: 16px; overflow-wrap: anywhere; }
-    .details h3 { margin-top: 0; }
-    .details p { margin: 6px 0; }
-    .muted { color: var(--muted); font-size: 13px; }
-    .message { padding: 12px; margin: 15px 0; border: 1px solid var(--border); border-radius: 4px; overflow-wrap: anywhere; }
-    .back-link { color: var(--gold); }
-    footer { padding: 25px; text-align: center; color: var(--muted); border-top: 1px solid var(--border); font-size: 13px; }
+    #message {
+      margin: 16px 0;
+      white-space: pre-wrap;
+    }
 
-    [hidden] { display: none !important; }
+    .muted {
+      color: #bbb;
+    }
   </style>
 </head>
-
 <body>
-  <header>
-    <a href="index.html">
-      <p class="brand">THE CANTINA CLUB</p>
-      <p class="tagline">ADMINISTRATOR AREA</p>
-    </a>
-  </header>
+<main>
+  <h1>The Cantina Club</h1>
+  <h2>Gallery Administration</h2>
 
-  <main>
-    <p><a class="back-link" href="index.html">&larr; Return to website</a></p>
+  <section id="login">
+    <p>Sign in with your administrator account.</p>
+    <form id="loginForm">
+      <input id="email" type="email" placeholder="Admin email" required>
+      <input id="password" type="password" placeholder="Password" required>
+      <button class="gold" type="submit">Sign in</button>
+    </form>
+  </section>
 
-    <section id="loginPanel" class="panel">
-      <h1>Administrator Sign In</h1>
-      <p class="muted">Sign in with your existing Supabase administrator account.</p>
+  <section id="dashboard" hidden>
+    <p id="signedIn" class="muted"></p>
+    <button id="refreshButton" class="gold" type="button">Refresh submissions</button>
+    <button id="logoutButton" type="button">Sign out</button>
+    <div id="submissions"></div>
+  </section>
 
-      <form id="loginForm">
-        <label for="email">Email address</label>
-        <input id="email" type="email" autocomplete="username" required>
+  <p id="message" role="status"></p>
+</main>
 
-        <label for="password">Password</label>
-        <input id="password" type="password" autocomplete="current-password" required>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+(function () {
+  "use strict";
 
-        <button id="loginButton" type="submit">Sign In</button>
-      </form>
+  var SUPABASE_URL = "https://auxtwhflkzyvgbuqcrkc.supabase.co";
+  var SUPABASE_PUBLISHABLE_KEY = "sb_publishable_wCVhkM5UuTdTdISy0U56IA_S5n3-2pz";
+  var ADMIN_USER_ID = "b49ce175-f0dc-4296-9964-329e690111a2";
 
-      <p id="loginMessage" class="message" hidden role="status"></p>
-    </section>
+  var client = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_PUBLISHABLE_KEY
+  );
 
-    <section id="adminPanel" hidden>
-      <div class="topbar">
-        <div>
-          <h1>Pending Submissions</h1>
-          <p class="muted">Review each picture before it appears in the public gallery.</p>
-        </div>
-        <button id="refreshButton" type="button">Refresh</button>
-        <button id="signOutButton" type="button">Sign Out</button>
-      </div>
+  var loginSection = document.getElementById("login");
+  var dashboard = document.getElementById("dashboard");
+  var message = document.getElementById("message");
+  var submissions = document.getElementById("submissions");
 
-      <p id="queueMessage" class="message" role="status">Loading submissions...</p>
-      <div id="submissions" class="submissions"></div>
-    </section>
-  </main>
+  function showMessage(text) {
+    message.textContent = text;
+  }
 
-  <footer>THE CANTINA CLUB — ADMINISTRATOR AREA</footer>
+  function setBusy(button, busy, label) {
+    button.disabled = busy;
+    if (busy) {
+      button.dataset.originalLabel = button.textContent;
+      button.textContent = label;
+    } else if (button.dataset.originalLabel) {
+      button.textContent = button.dataset.originalLabel;
+      delete button.dataset.originalLabel;
+    }
+  }
 
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  function addText(parent, tag, text, className) {
+    var element = document.createElement(tag);
+    element.textContent = text;
+    if (className) element.className = className;
+    parent.appendChild(element);
+    return element;
+  }
 
-  <script>
-    const SUPABASE_URL = "https://auxtwhflkzyvgbuqcrkc.supabase.co";
-    const SUPABASE_PUBLISHABLE_KEY =
-      "sb_publishable_wCVhkM5UuTdTdISy0U56IA_S5n-2pz";
+  async function checkAdministrator() {
+    var result = await client.auth.getUser();
 
-    const ADMIN_USER_ID = "b49ce175-f0dc-4296-9964-329e690111a2";
+    if (result.error) throw result.error;
 
-    const client = window.supabase.createClient(
-      SUPABASE_URL,
-      sb_publishable_wCVhkM5UuTdTdISy0U56IA_S5n3-2pz
-    );
+    var user = result.data.user;
 
-    const loginPanel = document.getElementById("loginPanel");
-    const adminPanel = document.getElementById("adminPanel");
-    const loginForm = document.getElementById("loginForm");
-    const loginButton = document.getElementById("loginButton");
-    const loginMessage = document.getElementById("loginMessage");
-    const queueMessage = document.getElementById("queueMessage");
-    const submissionsElement = document.getElementById("submissions");
-
-    let busy = false;
-
-    function showLoginMessage(message) {
-      loginMessage.textContent = message;
-      loginMessage.hidden = false;
+    if (!user || user.id !== ADMIN_USER_ID) {
+      loginSection.hidden = false;
+      dashboard.hidden = true;
+      throw new Error("This account is not the configured administrator account.");
     }
 
-    function showQueueMessage(message) {
-      queueMessage.textContent = message;
-      queueMessage.hidden = false;
-    }
+    loginSection.hidden = true;
+    dashboard.hidden = false;
+    document.getElementById("signedIn").textContent =
+      "Signed in as " + user.email;
 
-    function setSignedIn(signedIn) {
-      loginPanel.hidden = signedIn;
-      adminPanel.hidden = !signedIn;
-    }
+    return user;
+  }
 
-    function addText(parent, tag, value) {
-      const element = document.createElement(tag);
-      element.textContent = value;
-      parent.appendChild(element);
-      return element;
-    }
+  async function loadSubmissions() {
+    showMessage("Loading pending submissions...");
+    submissions.replaceChildren();
 
-    async function checkAdministrator() {
-      const { data, error } = await client.auth.getSession();
+    try {
+      await checkAdministrator();
 
-      if (error || !data.session) {
-        setSignedIn(false);
-        return false;
-      }
-
-      if (data.session.user.id !== ADMIN_USER_ID) {
-        await client.auth.signOut();
-        setSignedIn(false);
-        showLoginMessage(
-          "This account is not authorized to use the administrator page."
-        );
-        return false;
-      }
-
-      setSignedIn(true);
-      return true;
-    }
-
-    loginForm.addEventListener("submit", async (event) => {
-      event.preventDefault();
-
-      loginButton.disabled = true;
-      loginButton.textContent = "Signing in...";
-      loginMessage.hidden = true;
-
-      try {
-        const email = document.getElementById("email").value.trim();
-        const password = document.getElementById("password").value;
-
-        const { error } = await client.auth.signInWithPassword({
-          email,
-          password
-        });
-
-        if (error) {
-          throw error;
-        }
-
-        const authorized = await checkAdministrator();
-
-        if (authorized) {
-          await loadSubmissions();
-        }
-      } catch (error) {
-        showLoginMessage(error.message || "Sign-in failed.");
-      } finally {
-        loginButton.disabled = false;
-        loginButton.textContent = "Sign In";
-      }
-    });
-
-    document.getElementById("signOutButton").addEventListener("click", async () => {
-      await client.auth.signOut();
-      setSignedIn(false);
-      submissionsElement.replaceChildren();
-      showLoginMessage("You have signed out.");
-    });
-
-    document.getElementById("refreshButton").addEventListener("click", async () => {
-      if (await checkAdministrator()) {
-        await loadSubmissions();
-      }
-    });
-
-    async function loadSubmissions() {
-      submissionsElement.replaceChildren();
-      showQueueMessage("Loading pending submissions...");
-
-      const { data, error } = await client
+      var result = await client
         .from("gallery_submissions")
         .select("*")
         .eq("status", "pending")
         .order("created_at", { ascending: true });
 
-      if (error) {
-        showQueueMessage(
-          "Could not load submissions: " + error.message
-        );
+      if (result.error) throw result.error;
+
+      if (!result.data || result.data.length === 0) {
+        showMessage("There are no pending submissions.");
         return;
       }
 
-      if (!data || data.length === 0) {
-        showQueueMessage("There are no pending submissions.");
-        return;
+      showMessage("Pending submissions: " + result.data.length);
+
+      for (var i = 0; i < result.data.length; i++) {
+        await createSubmissionCard(result.data[i]);
       }
+    } catch (error) {
+      showMessage("Error: " + error.message);
+    }
+  }
 
-      showQueueMessage("Pending submissions: " + data.length);
+  async function createSubmissionCard(item) {
+    var card = document.createElement("article");
+    card.className = "card";
+    submissions.appendChild(card);
 
-      for (const item of data) {
-        const card = document.createElement("article");
-        card.className = "submission";
+    addText(card, "h2", item.character_name);
+    addText(card, "p", "Performer: " + item.performer_name);
+    addText(card, "p", "Universe: " + item.universe);
+    addText(card, "p", "Project: " + item.project_title);
+    addText(card, "p", "Media type: " + item.media_type);
+    addText(card, "p", "Year: " + (item.year || "Not supplied"));
+    addText(card, "p", "Image credit: " + (item.image_credit || "Not supplied"));
+    addText(card, "p", "Submitted: " + new Date(item.created_at).toLocaleString());
 
-        const image = document.createElement("img");
-        image.alt = "Submitted picture for " + item.character_name;
-        image.loading = "lazy";
-        image.src = "";
+    var imageResult = await client.storage
+      .from("pending-uploads")
+      .createSignedUrl(item.storage_path, 300);
 
-        const { data: signedData, error: imageError } = await client
-          .storage
-          .from("pending-uploads")
-          .createSignedUrl(item.storage_path, 300);
-
-        if (!imageError && signedData) {
-          image.src = signedData.signedUrl;
-        } else {
-          image.alt = "Image could not be loaded. Check storage permissions.";
-        }
-
-        card.appendChild(image);
-
-        const details = document.createElement("div");
-        details.className = "details";
-
-        addText(details, "h3", item.project_title);
-        addText(details, "p", "Character: " + item.character_name);
-        addText(details, "p", "Actress / Performer: " + item.performer_name);
-        addText(details, "p", "Universe: " + item.universe);
-        addText(details, "p", "Media type: " + item.media_type);
-
-        if (item.year) {
-          addText(details, "p", "Year: " + item.year);
-        }
-
-        if (item.image_credit) {
-          addText(details, "p", "Credit: " + item.image_credit);
-        }
-
-        addText(
-          details,
-          "p",
-          "Submitted: " + new Date(item.created_at).toLocaleString()
-        );
-
-        const approveButton = document.createElement("button");
-        approveButton.type = "button";
-        approveButton.textContent = "Approve";
-
-        const rejectButton = document.createElement("button");
-        rejectButton.type = "button";
-        rejectButton.textContent = "Reject";
-        rejectButton.className = "reject";
-
-        approveButton.addEventListener("click", () => {
-          processSubmission(item, "approve", approveButton, rejectButton, card);
-        });
-
-        rejectButton.addEventListener("click", () => {
-          if (confirm("Reject this submission and remove its pending image?")) {
-            processSubmission(item, "reject", approveButton, rejectButton, card);
-          }
-        });
-
-        details.appendChild(approveButton);
-        details.appendChild(rejectButton);
-        card.appendChild(details);
-        submissionsElement.appendChild(card);
-      }
+    if (imageResult.error) {
+      addText(card, "p", "Image preview unavailable: " + imageResult.error.message);
+    } else {
+      var image = document.createElement("img");
+      image.className = "preview";
+      image.alt = "Submitted gallery image";
+      image.src = imageResult.data.signedUrl;
+      card.appendChild(image);
     }
 
-    async function processSubmission(item, action, approveButton, rejectButton, card) {
-      if (busy) return;
+    var approveButton = document.createElement("button");
+    approveButton.className = "gold";
+    approveButton.type = "button";
+    approveButton.textContent = "Approve";
+    card.appendChild(approveButton);
 
-      busy = true;
-      approveButton.disabled = true;
+    var rejectButton = document.createElement("button");
+    rejectButton.className = "reject";
+    rejectButton.type = "button";
+    rejectButton.textContent = "Reject";
+    card.appendChild(rejectButton);
+
+    approveButton.addEventListener("click", async function () {
+      if (!window.confirm("Approve this image and publish it in the gallery?")) {
+        return;
+      }
+
+      setBusy(approveButton, true, "Approving...");
       rejectButton.disabled = true;
+      showMessage("Approving submission...");
 
       try {
-        if (!(await checkAdministrator())) {
-          throw new Error("Please sign in with the administrator account again.");
-        }
+        await checkAdministrator();
 
-        if (action === "approve") {
-          // Download the original from the private bucket.
-          const { data: file, error: downloadError } = await client
-            .storage
-            .from("pending-uploads")
-            .download(item.storage_path);
+        var downloadResult = await client.storage
+          .from("pending-uploads")
+          .download(item.storage_path);
 
-          if (downloadError) throw downloadError;
+        if (downloadResult.error) throw downloadResult.error;
 
-          // Upload the picture to the public bucket using the same path.
-          const { error: uploadError } = await client
-            .storage
-            .from("approved-gallery")
-            .upload(item.storage_path, file, {
-              upsert: false,
-              contentType: file.type || "application/octet-stream"
-            });
+        var uploadResult = await client.storage
+          .from("approved-gallery")
+          .upload(item.storage_path, downloadResult.data, {
+            upsert: true,
+            contentType: downloadResult.data.type || "image/jpeg"
+          });
 
-          if (uploadError) throw uploadError;
+        if (uploadResult.error) throw uploadResult.error;
 
-          // Publish the database record only after the public copy exists.
-          const { data: updatedRows, error: updateError } = await client
-            .from("gallery_submissions")
-            .update({
-              status: "approved",
-              storage_path: item.storage_path
-            })
-            .eq("id", item.id)
-            .eq("status", "pending")
-            .select("id");
+        var updateResult = await client
+          .from("gallery_submissions")
+          .update({ status: "approved" })
+          .eq("id", item.id)
+          .eq("status", "pending");
 
-          if (updateError || !updatedRows || updatedRows.length === 0) {
-            // Try to remove the public copy if the record was not approved.
-            await client.storage
-              .from("approved-gallery")
-              .remove([item.storage_path]);
+        if (updateResult.error) throw updateResult.error;
 
-            throw updateError || new Error(
-              "The record was not updated. The picture has not been approved."
-            );
-          }
+        var removeResult = await client.storage
+          .from("pending-uploads")
+          .remove([item.storage_path]);
 
-          // Remove the private source after successful approval.
-          const { error: removeError } = await client
-            .storage
-            .from("pending-uploads")
-            .remove([item.storage_path]);
-
-          card.remove();
-
-          showQueueMessage(
-            removeError
-              ? "Picture approved. The private original could not be removed; please check storage."
-              : "Picture approved and added to the public gallery."
+        if (removeResult.error) {
+          showMessage(
+            "Approved and published, but the private original could not be removed: " +
+            removeResult.error.message
           );
         } else {
-          const { data: updatedRows, error: updateError } = await client
-            .from("gallery_submissions")
-            .update({ status: "rejected" })
-            .eq("id", item.id)
-            .eq("status", "pending")
-            .select("id");
-
-          if (updateError || !updatedRows || updatedRows.length === 0) {
-            throw updateError || new Error(
-              "The submission was not rejected. Please refresh and try again."
-            );
-          }
-
-          const { error: removeError } = await client
-            .storage
-            .from("pending-uploads")
-            .remove([item.storage_path]);
-
-          card.remove();
-
-          showQueueMessage(
-            removeError
-              ? "Submission rejected. Its private image could not be removed; please check storage."
-              : "Submission rejected and its pending image removed."
-          );
+          showMessage("Approved. The image is now published in the gallery.");
         }
 
-        if (submissionsElement.children.length === 0) {
-          showQueueMessage("There are no pending submissions.");
+        card.remove();
+      } catch (error) {
+        showMessage("Approval failed: " + error.message);
+        setBusy(approveButton, false, "Approving...");
+        rejectButton.disabled = false;
+      }
+    });
+
+    rejectButton.addEventListener("click", async function () {
+      if (!window.confirm("Reject this submission?")) {
+        return;
+      }
+
+      setBusy(rejectButton, true, "Rejecting...");
+      approveButton.disabled = true;
+      showMessage("Rejecting submission...");
+
+      try {
+        await checkAdministrator();
+
+        var updateResult = await client
+          .from("gallery_submissions")
+          .update({ status: "rejected" })
+          .eq("id", item.id)
+          .eq("status", "pending");
+
+        if (updateResult.error) throw updateResult.error;
+
+        var removeResult = await client.storage
+          .from("pending-uploads")
+          .remove([item.storage_path]);
+
+        card.remove();
+
+        if (removeResult.error) {
+          showMessage(
+            "Submission rejected, but the private image could not be removed: " +
+            removeResult.error.message
+          );
+        } else {
+          showMessage("Submission rejected.");
         }
       } catch (error) {
-        console.error("Moderation error:", error);
-        showQueueMessage(
-          "Action failed: " + (error.message || "Unknown error") +
-          " You can refresh the queue and try again."
-        );
+        showMessage("Rejection failed: " + error.message);
+        setBusy(rejectButton, false, "Rejecting...");
         approveButton.disabled = false;
-        rejectButton.disabled = false;
-      } finally {
-        busy = false;
       }
+    });
+  }
+
+  document.getElementById("loginForm").addEventListener("submit", async function (event) {
+    event.preventDefault();
+
+    var button = this.querySelector('button[type="submit"]');
+    setBusy(button, true, "Signing in...");
+    showMessage("Signing in...");
+
+    try {
+      var result = await client.auth.signInWithPassword({
+        email: document.getElementById("email").value.trim(),
+        password: document.getElementById("password").value
+      });
+
+      if (result.error) throw result.error;
+
+      await checkAdministrator();
+      document.getElementById("password").value = "";
+      await loadSubmissions();
+    } catch (error) {
+      showMessage("Sign-in failed: " + error.message);
+    } finally {
+      setBusy(button, false, "Signing in...");
+    }
+  });
+
+  document.getElementById("refreshButton").addEventListener("click", loadSubmissions);
+
+  document.getElementById("logoutButton").addEventListener("click", async function () {
+    await client.auth.signOut();
+    loginSection.hidden = false;
+    dashboard.hidden = true;
+    submissions.replaceChildren();
+    document.getElementById("password").value = "";
+    showMessage("You have signed out.");
+  });
+
+  client.auth.getSession().then(function (result) {
+    if (result.error) {
+      showMessage("Session error: " + result.error.message);
+      return;
     }
 
-    async function startAdminPage() {
-      if (await checkAdministrator()) {
-        await loadSubmissions();
-      }
+    if (result.data.session) {
+      loadSubmissions();
     }
-
-    startAdminPage();
-  </script>
+  });
+})();
+</script>
 </body>
 </html>
