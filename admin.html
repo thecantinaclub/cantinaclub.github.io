@@ -260,7 +260,7 @@
         var uploadResult = await client.storage
           .from("approved-gallery")
           .upload(item.storage_path, downloadResult.data, {
-            upsert: true,
+            upsert: false,
             contentType: downloadResult.data.type || "image/jpeg"
           });
 
