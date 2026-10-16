@@ -537,7 +537,7 @@
         const extension = file.type === "image/png" ? "png" : "jpg";
 
         // Keep the path to exactly two levels to match the storage policy.
-        const storagePath = "submissions/" + uniqueId + "." + extension;
+        const storagePath = "submissions/" + uniqueId + "/" + uniqueId + "." + extension;
 
         const { error: uploadError } = await supabaseClient
           .storage
