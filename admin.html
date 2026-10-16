@@ -257,14 +257,18 @@
 
         if (downloadResult.error) throw downloadResult.error;
 
-        var uploadResult = await client.storage
-          .from("approved-gallery")
-          .upload(item.storage_path, downloadResult.data, {
-            upsert: false,
-            contentType: downloadResult.data.type || "image/jpeg"
-          });
+        
+var uploadResult = await client.storage
+  .from("approved-gallery")
+  .upload(item.storage_path, downloadResult.data, {
+    upsert: false,
+    contentType: downloadResult.data.type || "image/jpeg"
+  });
 
-        if (uploadResult.error) throw uploadResult.error;
+if (uploadResult.error) {
+  throw new Error("Image upload failed: " + uploadResult.error.message);
+}
+
 
         var updateResult = await client
           .from("gallery_submissions")
